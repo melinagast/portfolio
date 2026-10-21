@@ -42,6 +42,20 @@
 [data-layout="footer"] {
     padding: var(--gap-around);
     background-color: var(--color-accent);
+     .nav-container {
+        .nav {
+            list-style: none;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            align-self: center;
+            gap: 20px;
+            a {
+                text-decoration: none;
+                color: var(--color-white);
+            }
+        }
+    }
 }
 
 /* Styling of all available page components. */

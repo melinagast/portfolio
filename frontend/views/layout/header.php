@@ -1,6 +1,5 @@
 <?php
 $menu = get_menu_by_slug(slug: 'main');
-js_log($menu);
 ?>
 
 <header data-layout="header">
@@ -10,7 +9,8 @@ js_log($menu);
             <?php foreach ($menu as $item): ?>
                 <li class="nav-item">
                     <a target="<?= $item['target'] ?>" href="<?= $item['url'] ?>">
-                        <?= $item['title'] ?></a>
+                        <?= $item['title'] ?>
+                    </a>
                 </li>
             <?php endforeach; ?>
         </ul>
