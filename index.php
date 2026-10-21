@@ -1,3 +1,4 @@
-<h1>Melina's Portfolio</h1>
-
-<p>Welcome to my portfolio website! Here you can find information about my projects, skills, and experiences in the field of interactive media. Feel free to explore and get in touch if you have any questions or opportunities for collaboration.</p>
+<?php get_header() ?>
+<?php get_template_part('frontend/views/layout/header') ?>
+<?php get_template_part('frontend/views/layout/footer') ?>
+<?php get_footer() ?>
