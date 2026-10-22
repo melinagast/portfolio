@@ -4,7 +4,9 @@ $logo = get_global_logo();
 ?>
 
 <header data-layout="header">
-    <img class="logo" src="<?= $logo['src'] ?>" alt="<?= $logo['alt'] ?>" />
+    <a class="logo-link" href="<?= esc_url(home_url('/')) ?>" aria-label="Zur Startseite">
+        <img class="logo" src="<?= $logo['src'] ?>" alt="<?= $logo['alt'] ?>" />
+    </a>
     <nav class="nav-container">
         <ul class="nav">
             <?php foreach ($menu as $item): ?>
