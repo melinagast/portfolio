@@ -12,6 +12,12 @@ Container::make('post_meta', 'Module')
                 Field::make('text', 'title', 'Titel')->set_required(),
                 Field::make('image', 'image', 'Bild')->set_required(),
             ])
+            // -> projekte_archiv
+            ->add_fields('projekte_archiv', 'Projekte-Archiv', [
+                Field::make('text', 'title', 'Titel')
+                    ->set_default_value('Projekte')
+                    ->set_required(),
+            ])
             // todo: add new modules here
             // -> SETTINGS
             ->set_layout('tabbed-vertical')
@@ -28,6 +34,9 @@ function render_modules (): void {
         switch ($module['_type']) {
             case 'example':
                 $module['image'] = get_media_by_id($module['image'], 'full');
+                break;
+            case 'projekte_archiv':
+                $module['projects'] = get_projects();
                 break;
                 // todo: add data modifications for modules here as a new case
         }

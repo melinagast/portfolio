@@ -27,7 +27,7 @@ register_post_type('project', [
     'menu_icon' => 'dashicons-art',
     'show_in_admin_bar' => false,
     'show_in_nav_menus' => false,
-    'has_archive' => true,
+    'has_archive' => false,
     'exclude_from_search' => true,
     'publicly_queryable' => true,
     'capability_type' => 'post',
