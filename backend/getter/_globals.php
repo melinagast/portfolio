@@ -7,6 +7,10 @@ function get_global_logo() {
     return $logo;
 }
 
+function get_global_email() {
+    return carbon_get_theme_option('email');
+}
+
 function get_global_socials() {
     $socials = carbon_get_theme_option('socials');
     return array_map(function ($item) {
