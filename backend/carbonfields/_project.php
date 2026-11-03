@@ -29,6 +29,15 @@ Container::make('post_meta', 'Projekt')
                 Field::make('text', 'aufgabe', 'Aufgabe'),
             ]),
 
+        Field::make('complex', 'links', 'Links')
+            ->set_layout('tabbed-horizontal')
+            ->set_collapsed(true)
+            ->set_header_template('<% if ( titel ) { %> <%- titel %><% } %>')
+            ->add_fields([
+                Field::make('text', 'titel', 'Beschriftung')->set_width(40),
+                Field::make('text', 'url', 'URL')->set_attribute('type', 'url')->set_width(60),
+            ]),
+
         Field::make('image', 'ergebnis_bild', 'Ergebnis-Bild'),
         Field::make('complex', 'ergebnis_karten', 'Ergebnis-Karten')
             ->set_layout('grid')

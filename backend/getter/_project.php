@@ -18,6 +18,7 @@ function get_project_by_id(int $id): array {
         'vorschaubild' => $image('vorschaubild'),
         'einleitung' => apply_filters('the_content', carbon_get_post_meta($id, 'einleitung')),
         'aufgaben' => carbon_get_post_meta($id, 'aufgaben') ?: [],
+        'links' => carbon_get_post_meta($id, 'links') ?: [],
         'ergebnis_bild' => $image('ergebnis_bild'),
         'ergebnis_karten' => carbon_get_post_meta($id, 'ergebnis_karten') ?: [],
         'prozess_bild' => $image('prozess_bild'),

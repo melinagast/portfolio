@@ -3,6 +3,8 @@
  * EINMALIGER Import der Startinhalte. Aufruf: /wp-admin/?mg_seed=1 (als Admin eingeloggt).
  * Danach diese Datei und die require-Zeile in functions.php wieder entfernen.
  */
+require_once __DIR__ . '/_seed_texts.php';
+
 add_action('admin_init', function () {
     if (empty($_GET['mg_seed']) || !current_user_can('manage_options')) return;
     header('Content-Type: text/plain; charset=utf-8');

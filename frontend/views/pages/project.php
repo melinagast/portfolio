@@ -28,6 +28,14 @@ $has_process = $p['prozess_bild'] || $p['prozess_text'] || $p['prozess_schritte'
         <?php endif; ?>
     </section>
 
+    <?php if ($p['links']) : ?>
+        <section class="project-links">
+            <?php foreach ($p['links'] as $l) : ?>
+                <a class="button" href="<?= esc_url($l['url']) ?>" target="_blank" rel="noopener"><?= esc_html($l['titel']) ?> ↗</a>
+            <?php endforeach; ?>
+        </section>
+    <?php endif; ?>
+
     <?php if ($has_result || $has_process) : ?>
     <section class="project-tabs" data-tabs>
         <div class="toggle" role="tablist">
