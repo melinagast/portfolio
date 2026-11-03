@@ -1,0 +1,28 @@
+<?php
+register_post_type('arbeitsfeld', [
+    'label' => 'Arbeitsfeld',
+    'labels' => [
+        'name' => 'Arbeitsfelder',
+        'singular_name' => 'Arbeitsfeld',
+        'menu_name' => 'Arbeitsfelder',
+        'all_items' => 'Alle Arbeitsfelder',
+        'add_new_item' => 'Neues Arbeitsfeld hinzufügen',
+        'add_new' => 'Neues Arbeitsfeld',
+        'edit_item' => 'Arbeitsfeld bearbeiten',
+        'not_found' => 'Kein Arbeitsfeld gefunden',
+    ],
+    'supports' => ['title', 'page-attributes'],
+    'hierarchical' => false,
+    'public' => false,
+    'show_ui' => true,
+    'show_in_menu' => true,
+    'menu_position' => 21,
+    'menu_icon' => 'dashicons-star-filled',
+    'show_in_admin_bar' => false,
+    'show_in_nav_menus' => false,
+    'has_archive' => false,
+    'exclude_from_search' => true,
+    'publicly_queryable' => false,
+    'capability_type' => 'post',
+    'show_in_rest' => false,
+]);

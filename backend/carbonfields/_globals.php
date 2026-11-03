@@ -5,8 +5,7 @@ use Carbon_Fields\Field;
 // -> Inhaltsfeld-Konfiguration der globalen Einstellungen des Themes
 Container::make('theme_options', 'Globales')
     ->add_fields([
-        Field::make('image', 'logo', 'Logo')
-            ->set_required(),
+        Field::make('image', 'logo', 'Logo'),
         Field::make('text', 'email', 'E-Mail')
             ->set_required()
             ->set_default_value('melina.gast@gmx.ch')
@@ -23,8 +22,11 @@ Container::make('theme_options', 'Globales')
                     ->set_required()
                     ->set_attribute('placeholder', 'https://...')
                     ->set_width(50),
-                Field::make('image', 'icon', 'Icon')
-                    ->set_required(),
+                Field::make('image', 'icon', 'Icon'),
             ]),
-        // todo: Globale Inhaltsfelder hier ergänzen
+        Field::make('image', 'portrait', 'Portrait'),
+        Field::make('text', 'footer_claim', 'Footer-Claim')->set_default_value("let's work together"),
+        Field::make('text', 'footer_button_text', 'Footer-Button')->set_default_value('Schreib mir'),
+        Field::make('text', 'copyright', 'Copyright')->set_default_value('© 2026 Melina Gast'),
+        Field::make('image', 'favicon', 'Favicon'),
     ]);
