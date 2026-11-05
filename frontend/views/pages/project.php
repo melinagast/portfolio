@@ -3,13 +3,15 @@ $p = get_project_by_id(get_the_ID());
 $next = get_project_navigation(get_the_ID());
 $has_result = $p['ergebnis_bild'] || $p['ergebnis_karten'];
 $has_process = $p['prozess_bild'] || $p['prozess_text'] || $p['prozess_schritte'];
+$longest = max(array_map('mb_strlen', preg_split('/\s+/', trim($p['title']))) ?: [5]);
+$tn = min(11.8, round(105 / max($longest, 1), 2));
 $sub = array_filter([implode(', ', array_column($p['disziplinen'], 'name')), $p['mitarbeit'] ? 'mit ' . $p['mitarbeit'] : '']);
 ?>
 <main data-page="project">
     <section class="project-head">
         <span class="bignum" aria-hidden="true"><?= esc_html($p['nummer']) ?></span>
         <div class="head-text">
-            <div class="title-wrap">
+            <div class="title-wrap" style="--tn: <?= esc_attr($tn) ?>">
                 <h1 class="title"><?= esc_html($p['title']) ?></h1>
                 <?php if ($p['schriftzug']) : ?><span class="script"><?= esc_html($p['schriftzug']) ?></span><?php endif; ?>
             </div>

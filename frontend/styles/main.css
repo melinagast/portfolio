@@ -47,13 +47,13 @@ h2 { font-size: clamp(36px, 8vw, 110px); line-height: .95; }
 /* Hero (Startseite) */
 [data-module="hero"] { height: calc(var(--u) * 62.5); max-width: 1440px; margin-inline: auto; padding: 0; overflow: hidden; }
 .hero-text { display: contents; }
-.hero-title { position: absolute; left: 0; right: 0; top: calc(var(--u) * 9); text-align: center; font-size: calc(var(--u) * 27.8); line-height: 1; color: var(--peony); white-space: nowrap; }
+.hero-title { position: absolute; left: 0; right: 0; top: calc(var(--u) * 9); text-align: center; font-size: calc(var(--u) * 25.5); line-height: 1; color: var(--peony); white-space: nowrap; }
 .hero-script { position: absolute; left: calc(var(--u) * 16.7); top: calc(var(--u) * 5); font-size: calc(var(--u) * 17.4); color: var(--espresso); transform: rotate(-6deg); z-index: 4; }
 .hero-text p { position: absolute; left: var(--gutter); top: calc(var(--u) * 49); width: calc(var(--u) * 21); font-size: 18px; line-height: 1.6; z-index: 5; }
 .hero-image { position: absolute; left: calc(var(--u) * 49); bottom: 0; width: calc(var(--u) * 30); height: calc(var(--u) * 56); object-fit: contain; object-position: bottom; z-index: 3; background: none; border-radius: 0; max-height: none; }
 
 /* Seitenkopf */
-[data-module="seitenkopf"] { padding-top: 48px; padding-bottom: clamp(32px, 6vw, 100px); }
+[data-module="seitenkopf"] { padding-top: 48px; padding-bottom: clamp(24px, 4vw, 56px); }
 [data-module="seitenkopf"] .body { display: flex; flex-direction: column; gap: 28px; }
 [data-module="seitenkopf"] p { font-size: 19px; line-height: 1.65; max-width: 640px; }
 [data-module="seitenkopf"].has-portrait { display: grid; grid-template-columns: clamp(260px, 33vw, 480px) 1fr; gap: clamp(32px, 6vw, 88px); align-items: end; padding-bottom: clamp(48px, 7vw, 100px); }
@@ -92,7 +92,7 @@ h2 { font-size: clamp(36px, 8vw, 110px); line-height: .95; }
 /* Startseite: Neueste Projekte */
 [data-module="projekte_teaser"] { background: var(--peony); padding-block: clamp(48px, 8vw, 110px); }
 [data-module="projekte_teaser"] .head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px 40px; flex-wrap: wrap; margin-bottom: clamp(24px, 4vw, 56px); }
-[data-module="projekte_teaser"] h2 { font-size: clamp(48px, 10.4vw, 150px); line-height: .92; }
+[data-module="projekte_teaser"] .head h2 { font-size: clamp(48px, 10.4vw, 150px); line-height: .92; }
 [data-module="projekte_teaser"] .head .pill-link { margin-bottom: 12px; }
 [data-module="projekte_teaser"] .project-grid { gap: 32px; }
 [data-module="projekte_teaser"] .project-card img, [data-module="projekte_teaser"] .img-ph { height: clamp(260px, 26.4vw, 380px); background: var(--cream); }
@@ -115,11 +115,11 @@ h2 { font-size: clamp(36px, 8vw, 110px); line-height: .95; }
 .ergebnis-band b { font: 400 26px var(--f-display); text-transform: uppercase; border-top: 2px solid var(--espresso); padding-top: 10px; }
 
 /* Projekt Detail (Case Study) */
-[data-page="project"] { overflow: hidden; }
-.project-head { position: relative; height: calc(var(--u) * 50); max-width: 1440px; margin-inline: auto; }
-.bignum { position: absolute; left: var(--gutter); top: calc(var(--u) * -3); font-family: var(--f-display); font-size: calc(var(--u) * 41.7); line-height: .85; color: var(--peony); }
+[data-page="project"] { overflow-x: clip; }
+.project-head { position: relative; height: calc(var(--u) * 48); max-width: 1440px; margin-inline: auto; }
+.bignum { position: absolute; left: var(--gutter); top: calc(var(--u) * 1); font-family: var(--f-display); font-size: calc(var(--u) * 41.7); line-height: .85; color: var(--peony); }
 .head-text { position: absolute; left: calc(var(--u) * 48.6); right: var(--gutter); top: calc(var(--u) * 7); display: flex; flex-direction: column; gap: 16px; }
-.head-text .title-wrap { --t: calc(var(--u) * 11.8); }
+.head-text .title-wrap { --t: calc(var(--u) * var(--tn, 11.8)); }
 .head-text .title-wrap .script { top: calc(var(--t) * .5); }
 .head-text .tags { font: 700 13px var(--f-body); letter-spacing: .16em; text-transform: uppercase; }
 .head-text .rolle { font-size: 16px; color: var(--espresso); }
@@ -286,3 +286,12 @@ h2 { font-size: clamp(36px, 8vw, 110px); line-height: .95; }
   [data-module="zeitleiste"] li + li { border-top: 2px solid var(--cream); margin-top: 24px; }
   [data-layout="footer"] .bottom { justify-content: flex-start; }
 }
+
+/* Rechtstexte (Impressum, Datenschutz) */
+[data-module="rechtstext"] { padding-top: 0; padding-bottom: clamp(48px, 7vw, 100px); }
+[data-module="rechtstext"] .block { display: grid; grid-template-columns: minmax(160px, 380px) 1fr; gap: clamp(16px, 3.3vw, 48px); padding: 32px 0; border-top: 2px solid var(--espresso); }
+[data-module="rechtstext"] .block:last-child { border-bottom: 2px solid var(--espresso); }
+[data-module="rechtstext"] h2 { font-size: clamp(24px, 2.4vw, 34px); line-height: 1.05; }
+[data-module="rechtstext"] .body { display: flex; flex-direction: column; gap: 14px; max-width: 760px; font-size: 19px; line-height: 1.7; }
+[data-module="rechtstext"] .body a { text-decoration: underline; text-decoration-color: var(--peony); text-decoration-thickness: 3px; text-underline-offset: 4px; }
+@media (max-width: 760px) { [data-module="rechtstext"] .block { grid-template-columns: 1fr; } .head-text .title-wrap { --t: calc(17vw * var(--tn, 11.8) / 11.8); } }

@@ -78,6 +78,15 @@ Container::make('post_meta', 'Module')
                         Field::make('text', 'wert', 'Wert')->set_width(60),
                     ]),
             ])
+            ->add_fields('rechtstext', 'Rechtstext (Impressum, Datenschutz)', [
+                Field::make('complex', 'items', 'Abschnitte')
+                    ->set_layout('tabbed-vertical')
+                    ->set_header_template('<% if ( titel ) { %> <%- titel %><% } %>')
+                    ->add_fields([
+                        Field::make('text', 'titel', 'Überschrift'),
+                        Field::make('textarea', 'text', 'Text')->set_help_text('Leerzeile = neuer Absatz.'),
+                    ]),
+            ])
             ->add_fields('kontaktformular', 'Kontakt', [
                 Field::make('text', 'title', 'Titel')->set_default_value('Kontakt'),
                 Field::make('textarea', 'text', 'Text'),
