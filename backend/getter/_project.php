@@ -32,7 +32,7 @@ function get_project_navigation(int $id): ?array {
     $i = array_search($id, $all);
     if ($i === false || count($all) < 2) return null;
     $next = $all[($i + 1) % count($all)];
-    return ['title' => get_the_title($next), 'link' => get_permalink($next)];
+    return ['title' => get_the_title($next), 'link' => get_permalink($next), 'nummer' => carbon_get_post_meta($next, 'nummer')];
 }
 
 function get_projects(int $limit = -1): array {

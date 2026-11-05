@@ -13,7 +13,7 @@ function get_global_email() {
 function get_global_footer(): array {
     return [
         'claim' => carbon_get_theme_option('footer_claim') ?: "let's work together",
-        'button' => carbon_get_theme_option('footer_button_text') ?: 'Schreib mir',
+        'button' => carbon_get_theme_option('footer_button_text') ?: 'Kontakt aufnehmen →',
         'copyright' => carbon_get_theme_option('copyright') ?: '© 2026 Melina Gast',
     ];
 }

@@ -38,10 +38,13 @@ Container::make('post_meta', 'Module')
             ->add_fields('seitenkopf', 'Seitenkopf', [
                 Field::make('text', 'title', 'Titel')->set_required(),
                 Field::make('text', 'script', 'Schriftzug'),
-                Field::make('textarea', 'text', 'Einleitung'),
+                Field::make('textarea', 'text', 'Einleitung')->set_help_text('Leerzeile = neuer Absatz.'),
+                Field::make('checkbox', 'mit_portrait', 'Portrait links anzeigen (z. B. Über mich)'),
             ])
             ->add_fields('projekte_archiv', 'Projekte-Archiv (mit Filter)', [
                 Field::make('text', 'title', 'Titel')->set_default_value('Projekte')->set_required(),
+                Field::make('text', 'script', 'Schriftzug')->set_default_value('Work'),
+                Field::make('textarea', 'text', 'Einleitung'),
             ])
             ->add_fields('arbeitsfelder_auswahl', 'Arbeitsfelder-Auswahl (Band + Detail)', [
                 Field::make('text', 'title', 'Titel')->set_default_value('Arbeitsfelder'),
@@ -64,6 +67,9 @@ Container::make('post_meta', 'Module')
             ])
             ->add_fields('fakten', 'Fakten', [
                 Field::make('text', 'title', 'Titel')->set_default_value('Fakten'),
+                Field::make('textarea', 'text', 'Persönlicher Absatz (rechts, gross)'),
+                Field::make('text', 'button_text', 'Button-Text'),
+                Field::make('text', 'button_link', 'Button-Link'),
                 Field::make('complex', 'items', 'Einträge')
                     ->set_layout('tabbed-vertical')
                     ->set_header_template('<% if ( label ) { %> <%- label %><% } %>')
@@ -90,6 +96,12 @@ function render_modules (): void {
             case 'hero':
                 $module['image'] = !empty($module['image']) ? get_media_by_id($module['image'], 'l') : get_global_portrait();
                 break;
+            case 'about_teaser':
+                $module['bild'] = get_global_portrait();
+                break;
+            case 'seitenkopf':
+                $module['bild'] = !empty($module['mit_portrait']) ? get_global_portrait() : null;
+                break;
             case 'projekte_teaser':
                 $module['projects'] = get_projects((int) ($module['anzahl'] ?: 3));
                 break;
@@ -103,6 +115,7 @@ function render_modules (): void {
                 break;
             case 'kontaktformular':
                 $module['email'] = get_global_email();
+                $module['socials'] = get_global_socials();
                 break;
         }
         get_template_part('frontend/views/modules/' . $module['_type'], null, ['data' => $module]);

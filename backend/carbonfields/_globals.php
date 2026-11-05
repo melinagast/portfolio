@@ -26,7 +26,7 @@ Container::make('theme_options', 'Globales')
             ]),
         Field::make('image', 'portrait', 'Portrait'),
         Field::make('text', 'footer_claim', 'Footer-Claim')->set_default_value("let's work together"),
-        Field::make('text', 'footer_button_text', 'Footer-Button')->set_default_value('Schreib mir'),
+        Field::make('text', 'footer_button_text', 'Footer-Button')->set_default_value('Kontakt aufnehmen →'),
         Field::make('text', 'copyright', 'Copyright')->set_default_value('© 2026 Melina Gast'),
         Field::make('image', 'favicon', 'Favicon'),
     ]);
