@@ -27,8 +27,14 @@ function get_project_by_id(int $id): array {
     ];
 }
 
+function get_project_ids_sorted(): array {
+    $ids = get_posts(['post_type' => 'project', 'numberposts' => -1, 'orderby' => 'date', 'order' => 'DESC', 'fields' => 'ids']);
+    usort($ids, fn($a, $b) => ((int) carbon_get_post_meta($a, 'nummer') ?: 999) <=> ((int) carbon_get_post_meta($b, 'nummer') ?: 999));
+    return $ids;
+}
+
 function get_project_navigation(int $id): ?array {
-    $all = get_posts(['post_type' => 'project', 'numberposts' => -1, 'orderby' => 'date', 'order' => 'DESC', 'fields' => 'ids']);
+    $all = get_project_ids_sorted();
     $i = array_search($id, $all);
     if ($i === false || count($all) < 2) return null;
     $next = $all[($i + 1) % count($all)];
@@ -36,14 +42,7 @@ function get_project_navigation(int $id): ?array {
 }
 
 function get_projects(int $limit = -1): array {
-    $posts = get_posts([
-        'post_type' => 'project',
-        'numberposts' => $limit,
-        'orderby' => 'date',
-        'order' => 'DESC',
-    ]);
-
-    return array_map(function ($post) {
-        return get_project_by_id($post->ID);
-    }, $posts);
+    $ids = get_project_ids_sorted();
+    if ($limit > 0) $ids = array_slice($ids, 0, $limit);
+    return array_map('get_project_by_id', $ids);
 }
