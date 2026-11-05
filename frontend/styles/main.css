@@ -129,7 +129,7 @@ h2 { font-size: clamp(36px, 8vw, 110px); line-height: .95; }
 .aufgaben { list-style: none; counter-reset: a; display: flex; flex-direction: column; align-self: start; }
 .aufgaben li { counter-increment: a; display: flex; gap: 20px; align-items: baseline; border-top: 2px solid var(--espresso); padding: 14px 0; font-size: 18px; }
 .aufgaben li:last-child { border-bottom: 2px solid var(--espresso); }
-.aufgaben li::before { content: counter(a, decimal-leading-zero); font: 400 22px var(--f-display); }
+.aufgaben li::before { content: counter(a, decimal-leading-zero); font: 400 22px var(--f-display); flex: 0 0 34px; }
 .project-links { display: flex; flex-wrap: wrap; gap: 12px; padding: 32px var(--gutter) 0; }
 .project-tabs { padding: clamp(48px, 7vw, 96px) var(--gutter) clamp(48px, 7.6vw, 110px); }
 .tabs-head { display: flex; align-items: center; justify-content: space-between; gap: 24px 40px; flex-wrap: wrap; }
@@ -148,7 +148,7 @@ h2 { font-size: clamp(36px, 8vw, 110px); line-height: .95; }
 .schritte { list-style: none; counter-reset: s; }
 .schritte li { counter-increment: s; display: flex; gap: 24px; align-items: baseline; padding: 20px 0; border-top: 2px solid var(--espresso); font-size: 20px; }
 .schritte li:last-child { border-bottom: 2px solid var(--espresso); }
-.schritte li::before { content: counter(s); font: 400 56px/.9 var(--f-display); }
+.schritte li::before { content: counter(s); font: 400 56px/.9 var(--f-display); flex: 0 0 48px; }
 .next-project { display: flex; justify-content: space-between; align-items: center; gap: 24px 40px; flex-wrap: wrap; margin: 0 var(--gutter) clamp(48px, 7vw, 100px); padding: 32px 0; border-block: 2px solid var(--espresso); text-decoration: none; }
 .next-project small { font: 700 13px var(--f-body); letter-spacing: .16em; text-transform: uppercase; }
 .next-project span { font: 400 clamp(28px, 3.9vw, 56px)/1 var(--f-display); text-transform: uppercase; }
