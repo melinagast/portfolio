@@ -123,14 +123,14 @@ h2 { font-size: clamp(36px, 8vw, 110px); line-height: .95; }
 .head-text .title-wrap .script { top: calc(var(--t) * .5); }
 .head-text .tags { font: 700 13px var(--f-body); letter-spacing: .16em; text-transform: uppercase; }
 .head-text .rolle { font-size: 16px; color: var(--espresso); }
-.project-intro { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 5vw, 72px); padding: 56px var(--gutter) 0; }
+.project-intro { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 5vw, 72px); padding: 56px var(--gutter) clamp(40px, 5vw, 72px); }
 .einleitung { font-size: 21px; line-height: 1.7; }
 .einleitung p + p { margin-top: 1em; }
 .aufgaben { list-style: none; counter-reset: a; display: flex; flex-direction: column; align-self: start; }
 .aufgaben li { counter-increment: a; display: flex; gap: 20px; align-items: baseline; border-top: 2px solid var(--espresso); padding: 14px 0; font-size: 18px; }
 .aufgaben li:last-child { border-bottom: 2px solid var(--espresso); }
 .aufgaben li::before { content: counter(a, decimal-leading-zero); font: 400 22px var(--f-display); flex: 0 0 34px; }
-.project-links { display: flex; flex-wrap: wrap; gap: 12px; padding: 32px var(--gutter) 0; }
+.project-links { display: flex; flex-wrap: wrap; gap: 12px; padding: 0 var(--gutter); }
 .project-tabs { padding: clamp(48px, 7vw, 96px) var(--gutter) clamp(48px, 7.6vw, 110px); }
 .tabs-head { display: flex; align-items: center; justify-content: space-between; gap: 24px 40px; flex-wrap: wrap; }
 .tabs-head h2 { font-size: clamp(36px, 4.4vw, 64px); }
@@ -211,9 +211,9 @@ h2 { font-size: clamp(36px, 8vw, 110px); line-height: .95; }
 .persoenlich { font: italic 400 clamp(28px, 3vw, 44px)/1.1 var(--f-serif); }
 
 /* Kontakt */
-[data-module="kontaktformular"] { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 88px); align-items: start; padding-top: 0; }
-[data-module="kontaktformular"] .rows { border-top: 2px solid var(--espresso); }
-[data-module="kontaktformular"] .row { display: grid; grid-template-columns: 150px 1fr; padding: 16px 0; border-bottom: 2px solid var(--espresso); align-items: baseline; gap: 12px; }
+[data-module="kontaktformular"] { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 88px); align-items: stretch; padding-top: 0; }
+[data-module="kontaktformular"] .rows { border-top: 2px solid var(--espresso); display: flex; flex-direction: column; }
+[data-module="kontaktformular"] .row { display: grid; grid-template-columns: 150px 1fr; padding: 20px 0; border-bottom: 2px solid var(--espresso); align-items: center; align-content: center; flex: 1; gap: 12px; }
 [data-module="kontaktformular"] .lab { font: 700 13px var(--f-body); letter-spacing: .14em; text-transform: uppercase; }
 [data-module="kontaktformular"] .row a { text-decoration: none; font-size: 18px; overflow-wrap: anywhere; }
 [data-module="kontaktformular"] .row .mail { font: 400 clamp(22px, 2.2vw, 32px) var(--f-display); }
@@ -295,3 +295,15 @@ h2 { font-size: clamp(36px, 8vw, 110px); line-height: .95; }
 [data-module="rechtstext"] .body { display: flex; flex-direction: column; gap: 14px; max-width: 760px; font-size: 19px; line-height: 1.7; }
 [data-module="rechtstext"] .body a { text-decoration: underline; text-decoration-color: var(--peony); text-decoration-thickness: 3px; text-underline-offset: 4px; }
 @media (max-width: 760px) { [data-module="rechtstext"] .block { grid-template-columns: 1fr; } .head-text .title-wrap { --t: calc(17vw * var(--tn, 11.8) / 11.8); } }
+
+/* Kontakt: Titel und Kontaktzeilen links, rosa Formular-Karte rechts ab Seitenanfang */
+main:has(> [data-module="kontaktformular"]) { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .92fr); column-gap: clamp(32px, 5vw, 72px); padding-inline: var(--gutter); }
+main:has(> [data-module="kontaktformular"]) > [data-module="seitenkopf"] { grid-column: 1; grid-row: 1; padding-inline: 0; }
+main:has(> [data-module="kontaktformular"]) > [data-module="kontaktformular"] { display: contents; }
+main:has(> [data-module="kontaktformular"]) .rows { grid-column: 1; grid-row: 2; align-self: start; margin-bottom: clamp(48px, 6vw, 88px); }
+main:has(> [data-module="kontaktformular"]) .card-form { grid-column: 2; grid-row: 1 / span 2; align-self: stretch; margin: 24px 0 clamp(48px, 6vw, 88px); }
+[data-module="kontaktformular"] .row { flex: 0 0 auto; }
+@media (max-width: 900px) {
+  main:has(> [data-module="kontaktformular"]) { grid-template-columns: minmax(0, 1fr); }
+  main:has(> [data-module="kontaktformular"]) .card-form { grid-column: 1; grid-row: auto; margin-top: 0; }
+}

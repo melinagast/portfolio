@@ -116,7 +116,7 @@ function render_modules (): void {
                 break;
             case 'projekte_archiv':
                 $module['projects'] = get_projects();
-                $module['disziplinen'] = array_map(fn($t) => ['name' => $t->name, 'slug' => $t->slug], get_terms(['taxonomy' => 'disziplin', 'hide_empty' => false]) ?: []);
+                $module['disziplinen'] = array_map(fn($t) => ['name' => $t->name, 'slug' => $t->slug], get_terms(['taxonomy' => 'disziplin', 'hide_empty' => false, 'orderby' => 'term_id', 'order' => 'ASC']) ?: []);
                 break;
             case 'arbeitsfelder_raster':
             case 'arbeitsfelder_auswahl':
