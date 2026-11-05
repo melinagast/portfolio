@@ -8,3 +8,4 @@ require_once __DIR__ . '/backend/carbonfields/index.php';
 require_once __DIR__ . '/backend/getter/index.php';
 require_once __DIR__ . '/backend/seed/_seed.php'; // TEMPORÄR: nach dem Import entfernen
 require_once __DIR__ . '/backend/seed/_seed_legal.php'; // TEMPORÄR: nach dem Import entfernen
+require_once __DIR__ . '/backend/seed/_seed_projects.php'; // TEMPORÄR: nach dem Import entfernen

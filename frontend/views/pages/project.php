@@ -5,7 +5,7 @@ $has_result = $p['ergebnis_bild'] || $p['ergebnis_karten'];
 $has_process = $p['prozess_bild'] || $p['prozess_text'] || $p['prozess_schritte'];
 $longest = max(array_map('mb_strlen', preg_split('/\s+/', trim($p['title']))) ?: [5]);
 $tn = min(11.8, round(105 / max($longest, 1), 2));
-$sub = array_filter([implode(', ', array_column($p['disziplinen'], 'name')), $p['mitarbeit'] ? 'mit ' . $p['mitarbeit'] : '']);
+$sub = array_filter([implode(', ', array_column($p['disziplinen'], 'name')), $p['mitarbeit'] ?: '']);
 ?>
 <main data-page="project">
     <section class="project-head">
