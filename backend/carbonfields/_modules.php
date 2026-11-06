@@ -136,6 +136,7 @@ function get_skills_defaults (): array {
         ],
         'leise' => [
             ['label' => 'Video', 'wert' => 'Grundkenntnisse in Premiere Pro und CapCut'],
+            ['label' => 'Code', 'wert' => 'Visual Studio Code, GitHub'],
             ['label' => '3D & CAD', 'wert' => 'Vectorworks, Revit, SketchUp, Blender'],
         ],
         'qualis' => [
@@ -189,6 +190,13 @@ function render_modules (): void {
             case 'projekte_archiv':
                 $module['projects'] = get_projects();
                 $module['disziplinen'] = array_map(fn($t) => ['name' => $t->name, 'slug' => $t->slug], get_terms(['taxonomy' => 'disziplin', 'hide_empty' => false, 'orderby' => 'term_id', 'order' => 'ASC']) ?: []);
+                // Filter-Reihenfolge nach Interessen (Marketing/Kommunikation, Events, Web/UX, dann Rest). Unbekannte Slugs kommen ans Ende.
+                $order = ['branding', 'raum', 'web', 'illustration', 'film', 'audio'];
+                usort($module['disziplinen'], function ($a, $b) use ($order) {
+                    $pa = array_search($a['slug'], $order, true);
+                    $pb = array_search($b['slug'], $order, true);
+                    return ($pa === false ? 99 : $pa) <=> ($pb === false ? 99 : $pb);
+                });
                 break;
             case 'arbeitsfelder_raster':
             case 'arbeitsfelder_auswahl':
