@@ -5,9 +5,9 @@
         <?php if (!empty($d['script'])) : ?><span class="script"><?= esc_html($d['script']) ?></span><?php endif; ?>
     </div>
 
-    <ul class="staerken" aria-label="Stärken">
-        <?php foreach ($d['staerken'] as $wort) : ?><li><?= esc_html($wort) ?></li><?php endforeach; ?>
-    </ul>
+    <?php foreach (preg_split('/\R{2,}/', trim($d['intro'])) as $para) : ?>
+        <p class="skills-intro"><?= nl2br(esc_html($para)) ?></p>
+    <?php endforeach; ?>
 
     <div class="skill-cards">
         <?php foreach ($d['gruppen'] as $g) : ?>
@@ -18,20 +18,14 @@
                 </ul>
             </article>
         <?php endforeach; ?>
-    </div>
 
-    <div class="skill-lists">
-        <div class="leise">
-            <h3>Ausserdem</h3>
-            <dl>
-                <?php foreach ($d['leise'] as $i) : ?><dt><?= esc_html($i['label']) ?></dt><dd><?= esc_html($i['wert']) ?></dd><?php endforeach; ?>
-            </dl>
-        </div>
-        <div class="qualis">
-            <h3>Qualifikationen</h3>
-            <dl>
-                <?php foreach ($d['qualis'] as $i) : ?><dt><?= esc_html($i['jahr']) ?></dt><dd><?= esc_html($i['titel']) ?></dd><?php endforeach; ?>
-            </dl>
-        </div>
+        <?php if (!empty($d['qualis'])) : ?>
+            <article class="skill-card wide">
+                <h3>Qualifikationen</h3>
+                <ul class="tools">
+                    <?php foreach ($d['qualis'] as $i) : ?><li><?= esc_html($i['titel']) ?><?php if (!empty($i['jahr'])) : ?><small><?= esc_html($i['jahr']) ?></small><?php endif; ?></li><?php endforeach; ?>
+                </ul>
+            </article>
+        <?php endif; ?>
     </div>
 </section>

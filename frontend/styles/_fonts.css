@@ -1,9 +1,30 @@
-/*--- My Font ---*/
-/*regular*/
-/*@font-face {
-    font-family: 'Name';
+/* Schriften lokal gehostet (SIL Open Font License, Lizenztexte liegen neben den Dateien in assets/fonts).
+   Zeichensatz: Latein inkl. Umlaute, Satzzeichen, Pfeile. */
+@font-face {
+    font-family: 'Anton';
     font-style: normal;
     font-weight: 400;
     font-display: swap;
-    src: url('../assets/fonts/filename.woff2') format('woff2');
-}*/
+    src: url('../assets/fonts/Anton-Regular.woff') format('woff');
+}
+@font-face {
+    font-family: 'Hanken Grotesk';
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url('../assets/fonts/HankenGrotesk-Variable.woff') format('woff');
+}
+@font-face {
+    font-family: 'Mrs Saint Delafield';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../assets/fonts/MrsSaintDelafield-Regular.woff') format('woff');
+}
+@font-face {
+    font-family: 'Instrument Serif';
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../assets/fonts/InstrumentSerif-Italic.woff') format('woff');
+}

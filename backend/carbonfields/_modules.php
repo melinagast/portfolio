@@ -87,27 +87,17 @@ Container::make('post_meta', 'Module')
                         Field::make('textarea', 'text', 'Text')->set_help_text('Leerzeile = neuer Absatz.'),
                     ]),
             ])
-            ->add_fields('skills', 'Skills (Stärken, Tools, Qualifikationen)', [
+            ->add_fields('skills', 'Skills (Text, Karten, Qualifikationen)', [
                 Field::make('text', 'title', 'Titel')->set_default_value('Stärken & Tools'),
                 Field::make('text', 'script', 'Schriftzug (Script-Wort)')->set_default_value('was ich kann'),
-                Field::make('html', 'skills_hinweis')->set_html('<p>Leere Bereiche zeigen die Standardinhalte aus dem Lebenslauf. Sobald du einen Bereich befüllst, ersetzt er die Standardinhalte.</p>'),
-                Field::make('complex', 'staerken', 'Stärken (grosse Wörter)')
-                    ->set_layout('grid')->set_collapsed(true)
-                    ->set_header_template('<% if ( wort ) { %> <%- wort %><% } %>')
-                    ->add_fields([Field::make('text', 'wort', 'Wort')]),
-                Field::make('complex', 'gruppen', 'Tool-Gruppen (rosa Karten)')
+                Field::make('html', 'skills_hinweis')->set_html('<p>Leere Bereiche zeigen die Standardinhalte. Sobald du einen Bereich befüllst, ersetzt er die Standardinhalte.</p>'),
+                Field::make('textarea', 'intro', 'Eigener Text')->set_help_text('In deinen eigenen Worten. Leerzeile = neuer Absatz.'),
+                Field::make('complex', 'gruppen', 'Karten (in der Reihenfolge, wie sie erscheinen)')
                     ->set_layout('tabbed-vertical')
                     ->set_header_template('<% if ( titel ) { %> <%- titel %><% } %>')
                     ->add_fields([
-                        Field::make('text', 'titel', 'Titel der Gruppe'),
-                        Field::make('textarea', 'punkte', 'Tools')->set_help_text('Ein Tool pro Zeile.'),
-                    ]),
-                Field::make('complex', 'leise', 'Kleine Zeilen (z. B. Video, CAD)')
-                    ->set_layout('tabbed-vertical')
-                    ->set_header_template('<% if ( label ) { %> <%- label %><% } %>')
-                    ->add_fields([
-                        Field::make('text', 'label', 'Label')->set_width(30),
-                        Field::make('text', 'wert', 'Wert')->set_width(70),
+                        Field::make('text', 'titel', 'Titel der Karte'),
+                        Field::make('textarea', 'punkte', 'Einträge')->set_help_text('Ein Eintrag pro Zeile.'),
                     ]),
                 Field::make('complex', 'qualis', 'Qualifikationen')
                     ->set_layout('tabbed-vertical')
@@ -128,16 +118,17 @@ Container::make('post_meta', 'Module')
 // -> Standardinhalte für das Skills-Modul (gelten, solange der jeweilige Bereich im Backend leer ist)
 function get_skills_defaults (): array {
     return [
-        'staerken' => ['Organisiert', 'Strukturiert', 'Plant gern', 'Viele Ideen', 'Design & UX'],
+        'intro' => "Ich plane gern, und zwar gründlich. Mit einer klaren Struktur und einem Zeitplan fühle ich mich am wohlsten, ob bei einem Projekt, einem Event oder einer Kampagne.\n\nDazu kommt, dass ich ständig Ideen im Kopf habe und sie gern gestalte: als Konzept, als Layout oder als erster Prototyp in Figma. Websites programmiere ich nicht so gern, dafür entwerfe ich das UX-Design umso lieber.",
         'gruppen' => [
+            ['titel' => 'Projektmanagement', 'punkte' => ['Projektplanung', 'Meilensteine', 'Stagegates', 'Anspruchsgruppen', 'Projektabschluss']],
+            ['titel' => 'Events & Inszenierung', 'punkte' => ['Erlebniskonzepte', 'Atmosphäre & Raum', 'Storytelling', 'Audioinszenierung', 'Digital Signage']],
+            ['titel' => 'Kommunikation & Marketing', 'punkte' => ['Kampagnenkonzepte', 'Arbeitgebermarketing', 'HR-Kommunikation', 'Social Media', 'Pitch & Präsentation']],
             ['titel' => 'Design & UX', 'punkte' => ['Figma', 'InDesign', 'Illustrator', 'Photoshop', 'Canva', 'Procreate', 'RoughAnimator']],
-            ['titel' => 'Planung & Kommunikation', 'punkte' => ['Notion', 'Metricool', 'Word', 'PowerPoint', 'Excel']],
+            ['titel' => 'Planung & Office', 'punkte' => ['Notion', 'Metricool', 'Word', 'PowerPoint', 'Excel']],
             ['titel' => 'Websites gestalten', 'punkte' => ['WordPress', 'Squarespace']],
-        ],
-        'leise' => [
-            ['label' => 'Video', 'wert' => 'Grundkenntnisse in Premiere Pro und CapCut'],
-            ['label' => 'Code', 'wert' => 'Visual Studio Code, GitHub'],
-            ['label' => '3D & CAD', 'wert' => 'Vectorworks, Revit, SketchUp, Blender'],
+            ['titel' => 'Video-Grundlagen', 'punkte' => ['Premiere Pro', 'CapCut']],
+            ['titel' => 'Code', 'punkte' => ['Visual Studio Code', 'GitHub']],
+            ['titel' => '3D & CAD', 'punkte' => ['Vectorworks', 'Revit', 'SketchUp', 'Blender']],
         ],
         'qualis' => [
             ['jahr' => '2022–2023', 'titel' => 'J&S Trainerin Unihockey'],
@@ -148,8 +139,8 @@ function get_skills_defaults (): array {
 
 function prepare_skills_module (array $module): array {
     $def = get_skills_defaults();
-    $words = array_values(array_filter(array_map(fn($i) => trim($i['wort'] ?? ''), $module['staerken'] ?? [])));
-    $module['staerken'] = $words ?: $def['staerken'];
+    $intro = trim((string) ($module['intro'] ?? ''));
+    $module['intro'] = $intro !== '' ? $intro : $def['intro'];
 
     $groups = [];
     foreach ($module['gruppen'] ?? [] as $g) {
@@ -159,9 +150,6 @@ function prepare_skills_module (array $module): array {
         }
     }
     $module['gruppen'] = $groups ?: $def['gruppen'];
-
-    $leise = array_values(array_filter($module['leise'] ?? [], fn($i) => !empty($i['label']) || !empty($i['wert'])));
-    $module['leise'] = $leise ?: $def['leise'];
 
     $qualis = array_values(array_filter($module['qualis'] ?? [], fn($i) => !empty($i['titel'])));
     $module['qualis'] = $qualis ?: $def['qualis'];
