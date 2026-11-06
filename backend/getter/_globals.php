@@ -5,7 +5,14 @@ function get_global_logo() {
 }
 function get_global_portrait() {
     $id = carbon_get_theme_option('portrait');
-    return $id ? get_media_by_id($id, 'l') : null;
+    if ($id) {
+        return get_media_by_id($id, 'l');
+    }
+    // Fallback: ausgeschnittenes Portrait aus dem Theme
+    $file = get_template_directory() . '/frontend/assets/img/portrait.png';
+    return file_exists($file)
+        ? ['src' => get_template_directory_uri() . '/frontend/assets/img/portrait.png', 'alt' => 'Melina Gast', 'title' => 'Melina Gast']
+        : null;
 }
 function get_global_email() {
     return carbon_get_theme_option('email');
