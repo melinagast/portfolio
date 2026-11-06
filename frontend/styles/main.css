@@ -130,7 +130,7 @@ h2 { font-size: clamp(36px, 8vw, 110px); line-height: .95; }
 .aufgaben li { counter-increment: a; display: flex; gap: 20px; align-items: baseline; border-top: 2px solid var(--espresso); padding: 14px 0; font-size: 18px; }
 .aufgaben li:last-child { border-bottom: 2px solid var(--espresso); }
 .aufgaben li::before { content: counter(a, decimal-leading-zero); font: 400 22px var(--f-display); flex: 0 0 34px; }
-.project-links { display: flex; flex-wrap: wrap; gap: 12px; padding: 0 var(--gutter); }
+.project-links { display: flex; flex-wrap: wrap; gap: 12px; padding: 0 var(--gutter) clamp(40px, 5vw, 72px); }
 .project-tabs { padding: clamp(48px, 7vw, 96px) var(--gutter) clamp(48px, 7.6vw, 110px); }
 .tabs-head { display: flex; align-items: center; justify-content: space-between; gap: 24px 40px; flex-wrap: wrap; }
 .tabs-head h2 { font-size: clamp(36px, 4.4vw, 64px); }
@@ -149,7 +149,7 @@ h2 { font-size: clamp(36px, 8vw, 110px); line-height: .95; }
 .schritte li { counter-increment: s; display: flex; gap: 24px; align-items: baseline; padding: 20px 0; border-top: 2px solid var(--espresso); font-size: 20px; }
 .schritte li:last-child { border-bottom: 2px solid var(--espresso); }
 .schritte li::before { content: counter(s); font: 400 56px/.9 var(--f-display); flex: 0 0 48px; }
-.next-project { display: flex; justify-content: space-between; align-items: center; gap: 24px 40px; flex-wrap: wrap; margin: 0 var(--gutter) clamp(48px, 7vw, 100px); padding: 32px 0; border-block: 2px solid var(--espresso); text-decoration: none; }
+.next-project { display: flex; justify-content: space-between; align-items: center; gap: 24px 40px; flex-wrap: wrap; margin: clamp(8px, 2vw, 24px) var(--gutter) clamp(48px, 7vw, 100px); padding: 32px 0; border-block: 2px solid var(--espresso); text-decoration: none; }
 .next-project small { font: 700 13px var(--f-body); letter-spacing: .16em; text-transform: uppercase; }
 .next-project span { font: 400 clamp(28px, 3.9vw, 56px)/1 var(--f-display); text-transform: uppercase; }
 
@@ -208,15 +208,14 @@ h2 { font-size: clamp(36px, 8vw, 110px); line-height: .95; }
 [data-module="fakten"] dt { padding: 16px 0; border-bottom: 2px solid var(--espresso); font: 700 13px var(--f-body); letter-spacing: .14em; text-transform: uppercase; }
 [data-module="fakten"] dd { padding: 14px 0; border-bottom: 2px solid var(--espresso); font-size: 18px; }
 [data-module="fakten"] .side { display: flex; flex-direction: column; gap: 24px; justify-content: flex-end; align-items: flex-start; }
-.persoenlich { font: italic 400 clamp(28px, 3vw, 44px)/1.1 var(--f-serif); }
+.persoenlich { font: 500 clamp(24px, 2.4vw, 34px)/1.3 var(--f-body); letter-spacing: -.005em; }
 
 /* Kontakt */
 [data-module="kontaktformular"] { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 88px); align-items: stretch; padding-top: 0; }
-[data-module="kontaktformular"] .rows { border-top: 2px solid var(--espresso); display: flex; flex-direction: column; }
-[data-module="kontaktformular"] .row { display: grid; grid-template-columns: 150px 1fr; padding: 20px 0; border-bottom: 2px solid var(--espresso); align-items: center; align-content: center; flex: 1; gap: 12px; }
-[data-module="kontaktformular"] .lab { font: 700 13px var(--f-body); letter-spacing: .14em; text-transform: uppercase; }
-[data-module="kontaktformular"] .row a { text-decoration: none; font-size: 18px; overflow-wrap: anywhere; }
-[data-module="kontaktformular"] .row .mail { font: 400 clamp(22px, 2.2vw, 32px) var(--f-display); }
+[data-module="kontaktformular"] .kontakt-socials { list-style: none; display: flex; flex-wrap: wrap; gap: 16px; }
+.social-tile { min-width: 72px; height: 72px; border-radius: 20px; background: var(--peony); color: var(--espresso); display: grid; place-items: center; text-decoration: none; font: 700 13px var(--f-body); letter-spacing: .14em; text-transform: uppercase; transition: transform .2s, background .2s, color .2s; }
+.social-tile.is-text { padding: 0 24px; }
+.social-tile:hover { transform: translateY(-6px); background: var(--espresso); color: var(--peony); }
 .card-form { background: var(--peony); border-radius: 28px; padding: clamp(24px, 3.3vw, 48px); display: flex; flex-direction: column; gap: 8px; }
 .card-form h2 { font-size: clamp(36px, 4.4vw, 64px); margin-bottom: 16px; }
 .card-form label { font: 700 12px var(--f-body); letter-spacing: .16em; text-transform: uppercase; margin-top: 12px; }
@@ -224,7 +223,30 @@ h2 { font-size: clamp(36px, 8vw, 110px); line-height: .95; }
 .card-form input:focus, .card-form textarea:focus { outline: 2px solid var(--espresso); outline-offset: 2px; }
 .card-form textarea { resize: vertical; }
 .card-form .submit { align-self: flex-start; margin-top: 20px; background: var(--espresso); color: var(--peony); border: 0; border-radius: 999px; padding: 16px 40px; min-height: 48px; font: 700 14px var(--f-body); letter-spacing: .14em; text-transform: uppercase; cursor: pointer; }
-.card-form .hint { font-size: 13px; margin-top: 8px; }
+.card-form .hint { font-size: 13px; margin-top: 4px; }
+.card-form .hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.card-form .submit:disabled { opacity: .6; cursor: wait; }
+.card-form .form-status { font: 700 15px/1.5 var(--f-body); margin-top: 12px; min-height: 1.5em; }
+.card-form .form-status.is-error { color: #7A1818; }
+
+/* Skills (Arbeitsfelder-Seite): Stärken, Tool-Karten, Qualifikationen */
+[data-module="skills"] { padding-block: clamp(48px, 7vw, 100px); }
+[data-module="skills"] .title-wrap { --t: clamp(56px, 10vw, 140px); }
+[data-module="skills"] .title-wrap h2 { font-size: var(--t); line-height: .92; }
+[data-module="skills"] .staerken { list-style: none; display: flex; flex-wrap: wrap; gap: 4px clamp(20px, 3vw, 44px); margin: clamp(32px, 4vw, 56px) 0; font: 400 clamp(30px, 5vw, 72px)/1.1 var(--f-display); text-transform: uppercase; }
+[data-module="skills"] .staerken li:nth-child(even) { color: var(--peony); -webkit-text-stroke: 2px var(--espresso); paint-order: stroke fill; }
+.skill-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.skill-card { background: var(--peony); border-radius: 28px; padding: clamp(24px, 3vw, 40px); display: flex; flex-direction: column; gap: 24px; }
+.skill-card h3 { font-size: clamp(30px, 3vw, 44px); line-height: 1; }
+.tools { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+.tools li { border: 2px solid var(--espresso); border-radius: 999px; padding: 6px 16px; font: 700 14px var(--f-body); letter-spacing: .04em; }
+.skill-lists { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 88px); margin-top: clamp(40px, 5vw, 72px); align-items: start; }
+.skill-lists dl { display: grid; grid-template-columns: minmax(110px, 170px) 1fr; border-top: 2px solid var(--espresso); }
+.skill-lists dt { padding: 16px 0; border-bottom: 2px solid var(--espresso); font: 700 13px var(--f-body); letter-spacing: .14em; text-transform: uppercase; }
+.skill-lists dd { padding: 14px 0; border-bottom: 2px solid var(--espresso); font-size: 18px; }
+.skill-lists h3 { font-size: clamp(28px, 2.4vw, 34px); margin-bottom: 16px; }
+@media (max-width: 1000px) { .skill-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 760px) { .skill-cards, .skill-lists { grid-template-columns: 1fr; } .skill-lists dl { grid-template-columns: minmax(96px, 130px) 1fr; } }
 
 /* Textseiten (Impressum, Datenschutz) */
 [data-module="textblock"] { padding-block: 0 clamp(32px, 5vw, 64px); }
@@ -280,7 +302,6 @@ h2 { font-size: clamp(36px, 8vw, 110px); line-height: .95; }
   .tabs-head { align-items: flex-start; }
   .tile .box { width: 96px; height: 96px; }
   [data-module="arbeitsfelder_auswahl"] .tile { width: 150px; height: 150px; }
-  [data-module="kontaktformular"] .row { grid-template-columns: 1fr; gap: 2px; }
   [data-module="zeitleiste"] ol { grid-template-columns: 1fr; }
   [data-module="zeitleiste"] li, [data-module="zeitleiste"] li + li { border-left: 0; padding: 24px 0 0; }
   [data-module="zeitleiste"] li + li { border-top: 2px solid var(--cream); margin-top: 24px; }
@@ -297,13 +318,12 @@ h2 { font-size: clamp(36px, 8vw, 110px); line-height: .95; }
 @media (max-width: 760px) { [data-module="rechtstext"] .block { grid-template-columns: 1fr; } .head-text .title-wrap { --t: calc(17vw * var(--tn, 11.8) / 11.8); } }
 
 /* Kontakt: Titel und Kontaktzeilen links, rosa Formular-Karte rechts ab Seitenanfang */
-main:has(> [data-module="kontaktformular"]) { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .92fr); column-gap: clamp(32px, 5vw, 72px); padding-inline: var(--gutter); }
+main:has(> [data-module="kontaktformular"]) { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .92fr); grid-template-rows: auto 1fr; column-gap: clamp(32px, 5vw, 72px); padding-inline: var(--gutter); }
 main:has(> [data-module="kontaktformular"]) > [data-module="seitenkopf"] { grid-column: 1; grid-row: 1; padding-inline: 0; }
 main:has(> [data-module="kontaktformular"]) > [data-module="kontaktformular"] { display: contents; }
-main:has(> [data-module="kontaktformular"]) .rows { grid-column: 1; grid-row: 2; align-self: start; margin-bottom: clamp(48px, 6vw, 88px); }
+main:has(> [data-module="kontaktformular"]) .kontakt-socials { grid-column: 1; grid-row: 2; align-self: start; margin-top: 8px; margin-bottom: clamp(48px, 6vw, 88px); }
 main:has(> [data-module="kontaktformular"]) .card-form { grid-column: 2; grid-row: 1 / span 2; align-self: stretch; margin: 24px 0 clamp(48px, 6vw, 88px); }
-[data-module="kontaktformular"] .row { flex: 0 0 auto; }
 @media (max-width: 900px) {
-  main:has(> [data-module="kontaktformular"]) { grid-template-columns: minmax(0, 1fr); }
+  main:has(> [data-module="kontaktformular"]) { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; }
   main:has(> [data-module="kontaktformular"]) .card-form { grid-column: 1; grid-row: auto; margin-top: 0; }
 }

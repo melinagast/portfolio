@@ -87,6 +87,36 @@ Container::make('post_meta', 'Module')
                         Field::make('textarea', 'text', 'Text')->set_help_text('Leerzeile = neuer Absatz.'),
                     ]),
             ])
+            ->add_fields('skills', 'Skills (Stärken, Tools, Qualifikationen)', [
+                Field::make('text', 'title', 'Titel')->set_default_value('Stärken & Tools'),
+                Field::make('text', 'script', 'Schriftzug (Script-Wort)')->set_default_value('was ich kann'),
+                Field::make('html', 'skills_hinweis')->set_html('<p>Leere Bereiche zeigen die Standardinhalte aus dem Lebenslauf. Sobald du einen Bereich befüllst, ersetzt er die Standardinhalte.</p>'),
+                Field::make('complex', 'staerken', 'Stärken (grosse Wörter)')
+                    ->set_layout('grid')->set_collapsed(true)
+                    ->set_header_template('<% if ( wort ) { %> <%- wort %><% } %>')
+                    ->add_fields([Field::make('text', 'wort', 'Wort')]),
+                Field::make('complex', 'gruppen', 'Tool-Gruppen (rosa Karten)')
+                    ->set_layout('tabbed-vertical')
+                    ->set_header_template('<% if ( titel ) { %> <%- titel %><% } %>')
+                    ->add_fields([
+                        Field::make('text', 'titel', 'Titel der Gruppe'),
+                        Field::make('textarea', 'punkte', 'Tools')->set_help_text('Ein Tool pro Zeile.'),
+                    ]),
+                Field::make('complex', 'leise', 'Kleine Zeilen (z. B. Video, CAD)')
+                    ->set_layout('tabbed-vertical')
+                    ->set_header_template('<% if ( label ) { %> <%- label %><% } %>')
+                    ->add_fields([
+                        Field::make('text', 'label', 'Label')->set_width(30),
+                        Field::make('text', 'wert', 'Wert')->set_width(70),
+                    ]),
+                Field::make('complex', 'qualis', 'Qualifikationen')
+                    ->set_layout('tabbed-vertical')
+                    ->set_header_template('<% if ( titel ) { %> <%- jahr %> <%- titel %><% } %>')
+                    ->add_fields([
+                        Field::make('text', 'jahr', 'Zeitraum')->set_width(30),
+                        Field::make('text', 'titel', 'Qualifikation')->set_width(70),
+                    ]),
+            ])
             ->add_fields('kontaktformular', 'Kontakt', [
                 Field::make('text', 'title', 'Titel')->set_default_value('Kontakt'),
                 Field::make('textarea', 'text', 'Text'),
@@ -94,6 +124,48 @@ Container::make('post_meta', 'Module')
             ])
             ->set_layout('tabbed-vertical'),
     ]);
+
+// -> Standardinhalte für das Skills-Modul (gelten, solange der jeweilige Bereich im Backend leer ist)
+function get_skills_defaults (): array {
+    return [
+        'staerken' => ['Organisiert', 'Strukturiert', 'Plant gern', 'Viele Ideen', 'Design & UX'],
+        'gruppen' => [
+            ['titel' => 'Design & UX', 'punkte' => ['Figma', 'InDesign', 'Illustrator', 'Photoshop', 'Canva', 'Procreate', 'RoughAnimator']],
+            ['titel' => 'Planung & Kommunikation', 'punkte' => ['Notion', 'Metricool', 'Word', 'PowerPoint', 'Excel']],
+            ['titel' => 'Websites gestalten', 'punkte' => ['WordPress', 'Squarespace']],
+        ],
+        'leise' => [
+            ['label' => 'Video', 'wert' => 'Grundkenntnisse in Premiere Pro und CapCut'],
+            ['label' => '3D & CAD', 'wert' => 'Vectorworks, Revit, SketchUp, Blender'],
+        ],
+        'qualis' => [
+            ['jahr' => '2022–2023', 'titel' => 'J&S Trainerin Unihockey'],
+            ['jahr' => '2020–2022', 'titel' => '14/18 Trainerin'],
+        ],
+    ];
+}
+
+function prepare_skills_module (array $module): array {
+    $def = get_skills_defaults();
+    $words = array_values(array_filter(array_map(fn($i) => trim($i['wort'] ?? ''), $module['staerken'] ?? [])));
+    $module['staerken'] = $words ?: $def['staerken'];
+
+    $groups = [];
+    foreach ($module['gruppen'] ?? [] as $g) {
+        $punkte = array_values(array_filter(array_map('trim', preg_split('/\R/', (string) ($g['punkte'] ?? '')))));
+        if (!empty($g['titel']) || $punkte) {
+            $groups[] = ['titel' => $g['titel'] ?? '', 'punkte' => $punkte];
+        }
+    }
+    $module['gruppen'] = $groups ?: $def['gruppen'];
+
+    $leise = array_values(array_filter($module['leise'] ?? [], fn($i) => !empty($i['label']) || !empty($i['wert'])));
+    $module['leise'] = $leise ?: $def['leise'];
+
+    $qualis = array_values(array_filter($module['qualis'] ?? [], fn($i) => !empty($i['titel'])));
+    $module['qualis'] = $qualis ?: $def['qualis'];
+    return $module;
+}
 
 function render_modules (): void {
     $modules = carbon_get_the_post_meta('modules');
@@ -121,6 +193,9 @@ function render_modules (): void {
             case 'arbeitsfelder_raster':
             case 'arbeitsfelder_auswahl':
                 $module['felder'] = get_arbeitsfelder();
+                break;
+            case 'skills':
+                $module = prepare_skills_module($module);
                 break;
             case 'kontaktformular':
                 $module['email'] = get_global_email();

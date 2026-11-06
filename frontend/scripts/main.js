@@ -48,12 +48,31 @@ if (sec) {
   })
 }
 
-// Kontaktformular: öffnet das E-Mail-Programm mit fertigem Text (nichts wird auf dem Server gespeichert)
-document.querySelectorAll('form[data-mailto]').forEach((f) => {
-  f.addEventListener('submit', (e) => {
+// Kontaktformular: sendet die Nachricht per E-Mail über den Server (ohne JavaScript läuft es über eine Weiterleitung)
+document.querySelectorAll('form[data-contact]').forEach((f) => {
+  const status = f.querySelector('.form-status')
+  const button = f.querySelector('.submit')
+  const show = (text, isError) => {
+    status.textContent = text
+    status.classList.toggle('is-error', isError)
+  }
+  f.addEventListener('submit', async (e) => {
     e.preventDefault()
-    const v = (n) => f.elements[n].value.trim()
-    const body = v('msg') + '\n\n' + v('name') + '\n' + v('mail')
-    location.href = 'mailto:' + f.dataset.mailto + '?subject=' + encodeURIComponent('Nachricht von ' + v('name')) + '&body=' + encodeURIComponent(body)
+    if (!f.checkValidity()) return f.reportValidity()
+    const data = new FormData(f)
+    data.append('ajax', '1')
+    button.disabled = true
+    show('Wird gesendet …', false)
+    try {
+      const res = await fetch(f.action, { method: 'POST', body: data, headers: { Accept: 'application/json' } })
+      const json = await res.json()
+      const text = (json && json.data && json.data.message) || 'Das hat leider nicht geklappt. Bitte versuch es später nochmals.'
+      show(text, !(json && json.success))
+      if (json && json.success) f.reset()
+    } catch (err) {
+      show('Das hat leider nicht geklappt. Bitte versuch es später nochmals oder melde dich über LinkedIn oder Instagram.', true)
+    } finally {
+      button.disabled = false
+    }
   })
 })
