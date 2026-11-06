@@ -42,3 +42,5 @@ add_action('admin_init', function () {
     }
     wp_die('<pre>' . esc_html(implode("\n", $out ?: ['keine Bilder gefunden'])) . '</pre>', 'Bildimport', ['response' => 200]);
 });
+
+require_once __DIR__ . '/seiten.php';

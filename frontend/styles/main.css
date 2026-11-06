@@ -140,13 +140,13 @@ h2 { font-size: clamp(36px, 8vw, 110px); line-height: .95; }
 .toggle { display: flex; gap: 10px; }
 .panel { padding-top: 40px; display: flex; flex-direction: column; gap: 40px; }
 .panel[hidden] { display: none; }
-.panel > img { width: 100%; height: clamp(260px, 36vw, 520px); object-fit: cover; object-position: top; border-radius: 14px; }
+.panel > img { width: 100%; height: auto; max-height: clamp(320px, 62vw, 860px); object-fit: cover; object-position: top; border-radius: 14px; background: #fff; }
 .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
 .karte { background: var(--peony); border-radius: 18px; padding: 32px; display: flex; flex-direction: column; gap: 12px; }
 .karte h3 { font-size: 34px; }
 .karte p { font-size: 16px; line-height: 1.65; }
 .panel.process { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 4vw, 56px); align-items: start; }
-.panel.process > img { height: clamp(300px, 41.6vw, 600px); object-fit: cover; }
+.panel.process > img { height: auto; max-height: clamp(300px, 50vw, 700px); object-fit: cover; }
 .steps > p { font-size: 19px; line-height: 1.6; margin-bottom: 24px; }
 .schritte { list-style: none; counter-reset: s; }
 .schritte li { counter-increment: s; display: flex; gap: 24px; align-items: baseline; padding: 20px 0; border-top: 2px solid var(--espresso); font-size: 20px; }
