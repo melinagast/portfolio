@@ -76,3 +76,19 @@ document.querySelectorAll('form[data-contact]').forEach((f) => {
     }
   })
 })
+
+// Mobiles Menü (Burger)
+(() => {
+  const header = document.querySelector('[data-layout="header"]')
+  const btn = header && header.querySelector('.nav-toggle')
+  if (!btn) return
+  const set = (open) => {
+    header.classList.toggle('open', open)
+    btn.setAttribute('aria-expanded', open)
+    btn.setAttribute('aria-label', open ? 'Menü schliessen' : 'Menü öffnen')
+  }
+  btn.addEventListener('click', () => set(!header.classList.contains('open')))
+  header.querySelectorAll('.nav a').forEach((a) => a.addEventListener('click', () => set(false)))
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') set(false) })
+  document.addEventListener('click', (e) => { if (!header.contains(e.target)) set(false) })
+})()
