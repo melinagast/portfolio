@@ -1,9 +1,10 @@
 <?php
 /**
- * Einmaliger Bildimport: legt die Dateien aus ./bilder in die Mediathek
+ * Einmaliger Bildimport/-austausch: legt die Dateien aus ./bilder in die Mediathek
  * und setzt sie als Vorschaubild des gleichnamigen Projekts.
  * Aufruf (nur als eingeloggte Admin-Person): /wp-admin/?bilder_import=1
- * Vorhandene Vorschaubilder bleiben unberührt, ein zweiter Aufruf ist harmlos.
+ * Ein vorhandenes Bild wird nur ersetzt, wenn es aus einem früheren Import stammt
+ * (Dateiname beginnt mit dem Projektnamen); selbst gesetzte Bilder bleiben unberührt.
  */
 add_action('admin_init', function () {
     if (empty($_GET['bilder_import']) || !current_user_can('manage_options')) {
@@ -23,7 +24,12 @@ add_action('admin_init', function () {
             if ($t === $slug || $p->post_name === $slug) { $target = $p; break; }
         }
         if (!$target) { $out[] = "$slug: kein passendes Projekt gefunden"; continue; }
-        if (get_post_meta($target->ID, '_vorschaubild', true)) { $out[] = "$slug: hat schon ein Bild, übersprungen"; continue; }
+
+        $old = (int) get_post_meta($target->ID, '_vorschaubild', true);
+        if ($old) {
+            $oldfile = basename((string) get_attached_file($old));
+            if (strpos($oldfile, $slug) !== 0) { $out[] = "$slug: eigenes Bild vorhanden, übersprungen"; continue; }
+        }
 
         $tmp = wp_tempnam($file);
         copy($file, $tmp);
@@ -31,7 +37,8 @@ add_action('admin_init', function () {
         if (is_wp_error($id)) { @unlink($tmp); $out[] = "$slug: Fehler " . $id->get_error_message(); continue; }
         update_post_meta($id, '_wp_attachment_image_alt', $target->post_title);
         update_post_meta($target->ID, '_vorschaubild', $id);
-        $out[] = "$slug: importiert (Mediathek-ID $id)";
+        if ($old) { wp_delete_attachment($old, true); }
+        $out[] = "$slug: " . ($old ? 'ersetzt' : 'importiert') . " (Mediathek-ID $id)";
     }
     wp_die('<pre>' . esc_html(implode("\n", $out ?: ['keine Bilder gefunden'])) . '</pre>', 'Bildimport', ['response' => 200]);
 });
