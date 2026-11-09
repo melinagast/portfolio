@@ -7,4 +7,4 @@ require_once __DIR__ . '/backend/tax/index.php';
 require_once __DIR__ . '/backend/carbonfields/index.php';
 require_once __DIR__ . '/backend/getter/index.php';
 require_once __DIR__ . '/backend/contact/index.php';
-require_once __DIR__ . '/backend/import-bilder/index.php';
+
